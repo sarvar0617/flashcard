@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+@layer base {
+  * {
+    @apply box-border;
+  }
+
+  body {
+    @apply antialiased;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+  }
+
+  h1,
+  h2 {
+    @apply font-semibold;
+  }
+
+  h1 {
+    @apply text-2xl md:text-4xl;
+  }
+
+  h2 {
+    @apply text-lg md:text-2xl;
+  }
+
+  code {
+    font-family: ui-monospace, Consolas, monospace;
+  }
+
+  p {
+    @apply m-0;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply px-6 py-3 rounded-lg font-semibold text-base cursor-pointer transition-all duration-300 uppercase tracking-wide shadow-md disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap;
+  }
+
+  .btn:hover:not(:disabled) {
+    @apply -translate-y-0.5 shadow-lg;
+  }
+
+  .btn:active:not(:disabled) {
+    @apply translate-y-0;
+  }
+
+  .btn-primary {
+    @apply bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white;
+  }
+
+  .btn-secondary {
+    @apply bg-white/20 border-2 border-white/30 text-white;
+  }
+
+  .btn-secondary:hover:not(:disabled) {
+    @apply bg-white/30 border-white/50;
+  }
+
+  .btn-secondary.active {
+    @apply bg-white/40 border-white shadow-xl;
+  }
+
+  .btn-warning {
+    @apply bg-gradient-to-r from-[#f093fb] to-[#f5576c] text-white;
+  }
+
+  .btn-danger {
+    @apply bg-gradient-to-r from-red-500 to-red-600 text-white;
+  }
+}
