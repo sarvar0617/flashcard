@@ -8,54 +8,74 @@ export default function Flashcard({ word, translation, currentIndex, totalCards 
   }
 
   return (
-    <div className="my-8 animate-slideUp">
-      <div className="flex items-center gap-4 mb-8">
-        <span className="text-white font-semibold text-base min-w-fit text-right">
-          {currentIndex + 1} / {totalCards}
-        </span>
-        <div className="flex-1 h-2 bg-white/20 rounded-full overflow-hidden shadow-inner">
+    <div className="space-y-4 animate-slideUp">
+      {/* Progress */}
+      <div className="space-y-2">
+        <div className="flex items-center justify-between text-sm">
+          <span className="text-white/80 font-medium">{currentIndex + 1} / {totalCards}</span>
+          <span className="text-white/60 text-xs">{Math.round(((currentIndex + 1) / totalCards) * 100)}%</span>
+        </div>
+        <div className="h-1.5 bg-white/20 rounded-full overflow-hidden">
           <div 
-            className="h-full bg-gradient-to-r from-accent to-yellow-500 transition-all duration-500 shadow-lg"
+            className="h-full bg-gradient-to-r from-[#fbbf24] to-[#f59e0b] transition-all duration-500"
             style={{ width: `${((currentIndex + 1) / totalCards) * 100}%` }}
-          ></div>
+          />
         </div>
       </div>
 
-      <div className="perspective flex justify-center mb-8">
+      {/* Flashcard */}
+      <div
+        className="relative w-full aspect-square md:aspect-auto md:h-96 cursor-pointer rounded-2xl md:rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow"
+        onClick={handleFlip}
+        style={{
+          perspective: '1000px',
+          transformStyle: 'preserve-3d',
+        }}
+      >
         <div
-          className={`w-full max-w-2xl h-80 cursor-pointer relative transform transition-transform duration-600 ${
-            isFlipped ? 'rotate-y-180' : ''
-          }`}
-          onClick={handleFlip}
           style={{
-            perspective: '1000px',
             transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
             transformStyle: 'preserve-3d',
-            transition: 'transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)'
+            transition: 'transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)',
           }}
         >
+          {/* Front */}
           <div
-            className="absolute w-full h-full bg-gradient-to-br from-purple-500 to-purple-700 rounded-3xl shadow-3xl flex flex-col items-center justify-center p-8 text-white"
+            className="absolute inset-0 bg-gradient-to-br from-[#667eea] to-[#764ba2] flex flex-col items-center justify-center p-6 md:p-8 text-white"
             style={{
               backfaceVisibility: 'hidden',
               WebkitBackfaceVisibility: 'hidden'
             }}
           >
-            <div className="text-sm font-bold uppercase tracking-widest opacity-80 mb-4">English</div>
-            <p className="text-5xl font-bold text-center break-words leading-tight">{word}</p>
-            <div className="absolute bottom-6 text-xs opacity-70 font-medium tracking-wider animate-pulse">Click to flip</div>
+            <div className="text-xs md:text-sm font-semibold uppercase tracking-widest opacity-70 mb-4">
+              {word.length > 20 ? 'Term' : 'English'}
+            </div>
+            <p className="text-3xl md:text-5xl font-bold text-center break-words line-clamp-5">
+              {word}
+            </p>
+            <div className="absolute bottom-4 md:bottom-6 text-xs md:text-sm opacity-60 font-medium text-center">
+              Tap to reveal ↻
+            </div>
           </div>
+
+          {/* Back */}
           <div
-            className="absolute w-full h-full bg-gradient-to-br from-pink-500 to-red-500 rounded-3xl shadow-3xl flex flex-col items-center justify-center p-8 text-white"
+            className="absolute inset-0 bg-gradient-to-br from-[#f093fb] to-[#f5576c] flex flex-col items-center justify-center p-6 md:p-8 text-white"
             style={{
               backfaceVisibility: 'hidden',
               WebkitBackfaceVisibility: 'hidden',
               transform: 'rotateY(180deg)'
             }}
           >
-            <div className="text-sm font-bold uppercase tracking-widest opacity-80 mb-4">Translation</div>
-            <p className="text-5xl font-bold text-center break-words leading-tight">{translation}</p>
-            <div className="absolute bottom-6 text-xs opacity-70 font-medium tracking-wider animate-pulse">Click to flip</div>
+            <div className="text-xs md:text-sm font-semibold uppercase tracking-widest opacity-70 mb-4">
+              Answer
+            </div>
+            <p className="text-3xl md:text-5xl font-bold text-center break-words line-clamp-5">
+              {translation}
+            </p>
+            <div className="absolute bottom-4 md:bottom-6 text-xs md:text-sm opacity-60 font-medium text-center">
+              Tap to flip back ↻
+            </div>
           </div>
         </div>
       </div>
